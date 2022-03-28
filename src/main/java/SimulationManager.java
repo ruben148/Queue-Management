@@ -72,6 +72,7 @@ public class SimulationManager extends Thread{
     public void clientFinished(int q, Client c){
         c.exit = (int)currentTime;
         waitTime += c.exit - c.entry;
+        serviceTime+=c.executionTime;
         int wt=0;
         for(Server s: scheduler.servers)
             wt+=s.waitingTime;
@@ -95,7 +96,6 @@ public class SimulationManager extends Thread{
         }
         _clients.sort(Comparator.comparingInt(m -> m.runTime));
         for(Client c:_clients){
-            serviceTime+=c.executionTime;
             System.out.println(c);
         }
         return _clients;
